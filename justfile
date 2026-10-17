@@ -16,7 +16,7 @@ rebuild_flag := if force == "1" { "--rebuild" } else { "" }
 run *args: build (xmake "run" args)
 
 [group("xmake")]
-test *args: && config (xmake "test" args)
+test *args: && config (xmake "test" "-j1" args)
     export mode={{ if mode != "debug" { "valgrind" } else { "debug" } }}
 
 [group("xmake")]
