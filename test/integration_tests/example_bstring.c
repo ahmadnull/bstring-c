@@ -20,4 +20,8 @@ int main(int argc, char **argv) {
   printf("s1 == s2: %s\n", bstring_eq(s1, s2) ? "true" : "false");
   printf("s4 == s2: %s\n", bstring_eq(s4, s2) ? "true" : "false");
   printf("s5 == s1: %s\n", bstring_eq(s5, s1) ? "true" : "false");
+
+  bstring_free(s2);
+  bstring_free(s4);
+  bstring_free(s5);
 }

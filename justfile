@@ -1,87 +1,87 @@
 _default: check (test "-v")
 
-staged-c := `git diff --cached --name-only -- "*.[c|h]" | tr '\n' ' '`
+staged-c := `git diff --cached --name-only -- "*.[c|h]" | tr "\n" " "`
 
-verbose := '0'
-verbose_flag := if verbose == '1' { '-v' } else { '' }
+release     := "0"
+valgrind    := "0"
+export mode := if release == "1" { "release" } else if valgrind == "1" { "valgrind" } else { "debug" }
 
-release := '0'
-valgrind := '0'
-export mode := if release == '1' { 'release' } else if valgrind == '1' { "valgrind" } else { 'debug' }
+verbose      := "0"
+verbose_flag := if verbose == "1" { "-v" } else { "" }
 
-force := '0'
-rebuild_flag := if force == '1' { '--rebuild' } else { '' }
+force        := "0"
+rebuild_flag := if force == "1" { "--rebuild" } else { "" }
 
-[group('xmake')]
+[group("xmake")]
 run *args: build (xmake "run" args)
 
-[group('xmake')]
+[group("xmake")]
 test *args: && config (xmake "test" args)
-    export mode={{ if valgrind == '1' { 'valgrind' } else { 'debug' } }}
+    export mode={{ if mode != "debug" { "valgrind" } else { "debug" } }}
 
-[group('xmake')]
+[group("xmake")]
 build *args: config (xmake "build" rebuild_flag args)
 
-[group('xmake')]
+[group("xmake")]
 config *args: (xmake "config" "-m" mode args)
 
-[group('xmake')]
+[group("xmake")]
 check *args: (xmake "check" args)
 
-[group('xmake')]
+[group("xmake")]
 clean-all: (clean "--all")
 
-[group('xmake')]
+[group("xmake")]
 clean *args: (xmake "clean" args)
 
-[group('xmake')]
+[group("xmake")]
 format-check *args: (format "--dry-run" args)
 
-[group('xmake')]
+[group("xmake")]
 format *args: (xmake "format" args)
 
-[group('xmake')]
+[group("xmake")]
 [private]
 xmake *args:
     xmake {{args}} {{verbose_flag}}
 
-[group('just')]
+[group("just")]
 choose *args: (just "--choose" args)
 
 alias c := choose
 
-[group('just')]
+[group("just")]
 list *args: (just "--list" args)
 
 alias l := list
 
-[group('just')]
+[group("just")]
 [private]
 just *args:
     just {{args}}
 
-[group('git')]
+[group("git")]
 add-staged-c: (add staged-c)
 
-[group('git')]
+[group("git")]
 add-all: (add "-A")
 
-[group('git')]
+[group("git")]
 add +args: (git "add" args)
 
-[group('git')]
-[arg('type', pattern='feat|fix|refactor|perf|style|test|docs|build|ops|chore')]
-[arg('scope', short='s', long='scope')]
-[arg('breaking', short='B', long='breaking', value='1')]
-[arg('body', short='b', long='body')]
-[arg('footer', short='f', long='footer')]
-commit type description scope='' breaking='0' body='' footer='': format add-staged-c
+[group("git")]
+[arg("type", pattern="feat|fix|refactor|perf|style|test|docs|build|ops|chore")]
+[arg("scope", short="s", long="scope")]
+[arg("breaking", short="B", long="breaking", value="1")]
+[arg("body", short="b", long="body")]
+[arg("footer", short="f", long="footer")]
+commit type description scope="" breaking="0" body="" footer="": format add-staged-c
     #!/bin/env sh
     if [ -n "{{scope}}" ]; then scope="({{scope}})"; fi
     if [ "{{breaking}}" -eq "1" ]; then breaking="!"; fi
     git commit -m "{{type}}${scope}${breaking}: {{description}}" -m "{{body}}" -m "{{footer}}"
 
-[group('git')]
+[group("git")]
 [private]
 git *args:
     git {{args}}

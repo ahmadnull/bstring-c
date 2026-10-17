@@ -24,5 +24,6 @@ BSTRING_EXPORT size_t  bstring_length(bstring bstr);
 BSTRING_EXPORT bstring bstring_concat(bstring base, bstring suffix);
 BSTRING_EXPORT bstring bstring_concat_cstr(bstring base, cstring suffix);
 BSTRING_EXPORT bstring bstring_copy(bstring bstr);
+BSTRING_EXPORT void    bstring_free(bstring bstr);
 BSTRING_EXPORT bool    bstring_eq(bstring a, bstring b);
 BSTRING_EXPORT bool    bstring_eq_cstr(bstring a, cstring b);

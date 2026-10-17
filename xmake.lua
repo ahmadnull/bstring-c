@@ -18,6 +18,7 @@ function add_test(name, source)
         if is_mode("valgrind") then
             on_test(function (target)
                 os.exec("valgrind --leak-check=full --error-exitcode=1 " .. target:targetfile())
+                return true
             end)
         end
 end

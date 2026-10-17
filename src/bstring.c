@@ -53,6 +53,8 @@ bstring bstring_copy(bstring bstr) {
   return (bstring){.str = str, .length = bstr.length};
 }
 
+void bstring_free(bstring bstr) { free(bstr.str); }
+
 bool bstring_eq(bstring a, bstring b) {
   return bstring_eq_cstr_with_length(a, b.str, a.length, b.length);
 }

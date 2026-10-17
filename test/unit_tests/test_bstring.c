@@ -111,6 +111,9 @@ static void test_concat(void) {
     tee(assert(strcmp(s2.str, BASE SUFFIX) == 0));
     tee(assert(strcmp(s4.str, BASE SUFFIX) == 0));
 
+    bstring_free(s2);
+    bstring_free(s4);
+
     #undef BASE
     #undef SUFFIX
 }
@@ -134,6 +137,8 @@ static void test_copy(void) {
 
     tee(assert(strcmp(bstr1.str, cstr1) == 0));
     tee(assert(strcmp(bstr2.str, cstr2) == 0));
+
+    bstring_free(bstr2);
 }
 
 static void test_eq(void) {
