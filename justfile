@@ -6,7 +6,8 @@ verbose := '0'
 verbose_flag := if verbose == '1' { '-v' } else { '' }
 
 release := '0'
-mode := if release == '1' { 'release' } else { 'debug' }
+valgrind := '0'
+export mode := if release == '1' { 'release' } else if valgrind == '1' { "valgrind" } else { 'debug' }
 
 force := '0'
 rebuild_flag := if force == '1' { '--rebuild' } else { '' }
@@ -15,7 +16,8 @@ rebuild_flag := if force == '1' { '--rebuild' } else { '' }
 run *args: build (xmake "run" args)
 
 [group('xmake')]
-test *args: (config "-m" "debug") (xmake "test" args)
+test *args: && config (xmake "test" args)
+    export mode={{ if valgrind == '1' { 'valgrind' } else { 'debug' } }}
 
 [group('xmake')]
 build *args: config (xmake "build" rebuild_flag args)
