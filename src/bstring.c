@@ -20,6 +20,8 @@ bstring bstring_new_with_length(cstring cstr, size_t length) {
 
 cstring bstring_to_cstr(bstring bstr) { return bstr.str; }
 
+size_t bstring_length(bstring bstr) { return bstr.length; }
+
 bstring bstring_concat(bstring base, bstring suffix) {
   return bstring_concat_cstr_with_length(base, suffix.str, strlen(suffix.str));
 }
@@ -51,11 +53,11 @@ bstring bstring_copy(bstring bstr) {
   return (bstring){.str = str, .length = bstr.length};
 }
 
-BSTRING_EXPORT bool bstring_eq(bstring a, bstring b) {
+bool bstring_eq(bstring a, bstring b) {
   return bstring_eq_cstr_with_length(a, b.str, a.length, b.length);
 }
 
-BSTRING_EXPORT bool bstring_eq_cstr(bstring a, cstring b) {
+bool bstring_eq_cstr(bstring a, cstring b) {
   return bstring_eq_cstr_with_length(a, b, a.length, strlen(b));
 }
 

@@ -1,7 +1,9 @@
-#include "../include/bstring.h"
+#include "../../include/bstring.h"
 #include <stdio.h>
 
 int main(int argc, char **argv) {
+  printf("\n");
+
   bstring s1 = bstring_new("Hello World!");
   printf("s1: %s\n", bstring_to_cstr(s1));
 

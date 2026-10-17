@@ -1,18 +1,39 @@
-_default: check run
+_default: check (test "-v")
 
 staged-c := `git diff --cached --name-only -- "*.[c|h]" | tr '\n' ' '`
+
+verbose := '0'
+verbose_flag := if verbose == '1' { '-v' } else { '' }
+
+release := '0'
+mode := if release == '1' { 'release' } else { 'debug' }
+
+force := '0'
+rebuild_flag := if force == '1' { '--rebuild' } else { '' }
 
 [group('xmake')]
 run *args: build (xmake "run" args)
 
 [group('xmake')]
-build *args: (xmake "build" args)
+test *args: (config "-m" "debug") (xmake "test" args)
 
 [group('xmake')]
-test *args: (xmake "test" args)
+build *args: config (xmake "build" rebuild_flag args)
+
+[group('xmake')]
+config *args: (xmake "config" "-m" mode args)
 
 [group('xmake')]
 check *args: (xmake "check" args)
+
+[group('xmake')]
+clean-all: (clean "--all")
+
+[group('xmake')]
+clean *args: (xmake "clean" args)
+
+[group('xmake')]
+format-check *args: (format "--dry-run" args)
 
 [group('xmake')]
 format *args: (xmake "format" args)
@@ -20,7 +41,22 @@ format *args: (xmake "format" args)
 [group('xmake')]
 [private]
 xmake *args:
-    xmake {{args}}
+    xmake {{args}} {{verbose_flag}}
+
+[group('just')]
+choose *args: (just "--choose" args)
+
+alias c := choose
+
+[group('just')]
+list *args: (just "--list" args)
+
+alias l := list
+
+[group('just')]
+[private]
+just *args:
+    just {{args}}
 
 [group('git')]
 add-staged-c: (add staged-c)
