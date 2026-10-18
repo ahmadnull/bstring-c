@@ -1,21 +1,13 @@
+#include <ctype.h>
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../include/bstring.h"
-
-bstring bstring_new_with_length(cstring cstr, size_t length);
-bstring bstring_concat_cstr_with_length(bstring base, cstring suffix,
-                                        size_t length);
-bool bstring_eq_cstr_with_length(bstring a, cstring b, size_t a_length,
-                                 size_t b_length);
+#include "internal.c"
 
 bstring bstring_new(cstring cstr) {
   return bstring_new_with_length(cstr, strlen(cstr));
-}
-
-bstring bstring_new_with_length(cstring cstr, size_t length) {
-  return (bstring){.str = cstr, .length = length};
 }
 
 cstring bstring_to_cstr(bstring bstr) { return bstr.str; }
@@ -30,30 +22,17 @@ bstring bstring_concat_cstr(bstring base, cstring suffix) {
   return bstring_concat_cstr_with_length(base, suffix, strlen(suffix));
 }
 
-bstring bstring_concat_cstr_with_length(bstring base, cstring suffix,
-                                        size_t length) {
-  size_t bstr_len = base.length;
-  size_t cstr_len = length;
-  size_t new_len = bstr_len + cstr_len;
-
-  cstring new_str = malloc(new_len + 1);
-  if (new_str == NULL)
-    return (bstring){.str = NULL, .length = 0};
-
-  memcpy(new_str, base.str, bstr_len);
-  memcpy(new_str + bstr_len, suffix, cstr_len + 1);
-
-  return bstring_new_with_length(new_str, new_len);
-}
-
 bstring bstring_copy(bstring bstr) {
   cstring str = malloc(bstr.length + 1);
+  if (str == NULL)
+    return (bstring){.str = NULL, .length = 0};
+
   memcpy(str, bstr.str, bstr.length + 1);
 
   return (bstring){.str = str, .length = bstr.length};
 }
 
-void bstring_free(bstring bstr) { free(bstr.str); }
+void bstring_free(bstring *bstr) { free(bstr->str); }
 
 bool bstring_eq(bstring a, bstring b) {
   return bstring_eq_cstr_with_length(a, b.str, a.length, b.length);
@@ -63,14 +42,36 @@ bool bstring_eq_cstr(bstring a, cstring b) {
   return bstring_eq_cstr_with_length(a, b, a.length, strlen(b));
 }
 
-bool bstring_eq_cstr_with_length(bstring a, cstring b, size_t a_length,
-                                 size_t b_length) {
-  if (a_length != b_length)
-    return false;
+int bstring_search(bstring bstr, char c) {
+  for (size_t i = 0; i < bstr.length; i++)
+    if (bstr.str[i] == c)
+      return i;
+  return -1;
+}
 
-  for (size_t i = 0; i < a_length; i++)
-    if (a.str[i] != b[i])
-      return false;
+char bstring_char_at(bstring bstr, size_t index) {
+  if (index > bstr.length)
+    return 0;
 
-  return true;
+  return bstr.str[index];
+}
+
+bstring bstring_to_upper(bstring bstr) {
+  cstring cstr = malloc(bstr.length + 1);
+  strcpy(cstr, bstr.str);
+
+  for (size_t i = 0; i < bstr.length; i++)
+    cstr[i] = toupper(cstr[i]);
+
+  return bstring_new_with_length(cstr, bstr.length);
+}
+
+bstring bstring_to_lower(bstring bstr) {
+  cstring cstr = malloc(bstr.length + 1);
+  strcpy(cstr, bstr.str);
+
+  for (size_t i = 0; i < bstr.length; i++)
+    cstr[i] = tolower(cstr[i]);
+
+  return bstring_new_with_length(cstr, bstr.length);
 }

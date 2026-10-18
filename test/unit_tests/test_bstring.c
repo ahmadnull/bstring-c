@@ -12,7 +12,7 @@
 #define BOLD   "\033[1m"
 #define NORMAL "\033[0m"
 
-#define index_start(level, start) static size_t index_##level = start;
+#define index_start(level, start) static size_t index_##level = start
 
 #define run_test(test) do {                                     \
     printf("\n" BOLD BLUE "[%zu] " #test NORMAL "\n", index_0); \
@@ -114,8 +114,8 @@ static void test_concat(void) {
     tee(assert(strcmp(s2.str, BASE SUFFIX) == 0));
     tee(assert(strcmp(s4.str, BASE SUFFIX) == 0));
 
-    bstring_free(s2);
-    bstring_free(s4);
+    bstring_free(&s2);
+    bstring_free(&s4);
 
     #undef BASE
     #undef SUFFIX
@@ -141,7 +141,7 @@ static void test_copy(void) {
     tee(assert(strcmp(bstr1.str, cstr1) == 0));
     tee(assert(strcmp(bstr2.str, cstr2) == 0));
 
-    bstring_free(bstr2);
+    bstring_free(&bstr2);
 }
 
 static void test_eq(void) {
@@ -166,6 +166,66 @@ static void test_eq(void) {
     tee(assert(!bstring_eq_cstr(bstr1, cstr2)));
 }
 
+static void test_search(void) {
+    bstring bstr = bstring_new("Veritas");
+
+    index_start(1, 0);
+
+    debug("bstr", "s", bstr.str, 1);
+
+    tee(assert(bstring_search(bstr, 'V') == 0));
+    tee(assert(bstring_search(bstr, 't') == 4));
+    tee(assert(bstring_search(bstr, 's') == 6));
+}
+
+static void test_char_at(void) {
+    bstring bstr = bstring_new("Veritas");
+
+    index_start(1, 0);
+
+    debug("bstr", "s", bstr.str, 1);
+
+    tee(assert(bstring_char_at(bstr, 0) == 'V'));
+    tee(assert(bstring_char_at(bstr, 4) == 't'));
+    tee(assert(bstring_char_at(bstr, 6) == 's'));
+}
+
+static void test_to_upper(void) {
+    cstring cstr = "Veritas Vincit";
+    bstring bstr = bstring_new(cstr);
+    bstring bstr_upper = bstring_to_upper(bstr);
+
+    index_start(1, 0);
+
+    debug("cstr", "s", cstr, 2);
+    debug("bstr", "s", bstr.str, 2);
+    debug("bstr uppercase", "s", bstr_upper.str, 1);
+
+    log("Test that bstring_to_upper doesn't change the original bstring");
+    tee(assert(strcmp(bstr.str, cstr) == 0));
+
+    log("Test that bstring_to_upper works correctly");
+    tee(assert(strcmp(bstr_upper.str, "VERITAS VINCIT") == 0));
+}
+
+static void test_to_lower(void) {
+    cstring cstr = "Veritas Vincit";
+    bstring bstr = bstring_new(cstr);
+    bstring bstr_lower = bstring_to_lower(bstr);
+
+    index_start(1, 0);
+
+    debug("cstr", "s", cstr, 2);
+    debug("bstr", "s", bstr.str, 2);
+    debug("bstr lowercase", "s", bstr_lower.str, 1);
+
+    log("Test that bstring_to_lower doesn't change the original bstring");
+    tee(assert(strcmp(bstr.str, cstr) == 0));
+
+    log("Test that bstring_to_lower works correctly");
+    tee(assert(strcmp(bstr_lower.str, "veritas vincit") == 0));
+}
+
 int main(void) {
     run_test(test_new);
     run_test(test_to_cstr);
@@ -173,5 +233,9 @@ int main(void) {
     run_test(test_concat);
     run_test(test_copy);
     run_test(test_eq);
+    run_test(test_search);
+    run_test(test_char_at);
+    run_test(test_to_upper);
+    run_test(test_to_lower);
     return 0;
 }
