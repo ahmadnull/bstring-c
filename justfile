@@ -12,9 +12,17 @@ verbose_flag := if verbose == "1" { "-v" } else { "" }
 force        := "0"
 rebuild_flag := if force == "1" { "--rebuild" } else { "" }
 
+cat_command := `if command -v bat >/dev/null 2>&1; then echo bat; elif command -v batcat >/dev/null 2>&1; then echo batcat; else echo cat; fi`
+
+[group("xmake")]
+[group("examples")]
+@list-examples: && (xmake "list-examples")
+    printf "%s%s%s\n" {{BOLD + BLUE}} "Available Examples:" {{NORMAL}}
+
 [group("xmake")]
 [group("run")]
-run-examples *args: build (run-group "examples" args)
+[group("examples")]
+run-examples *args: build (xmake "run-examples" args)
 
 [group("xmake")]
 [group("run")]
@@ -81,6 +89,10 @@ alias l := list
 [private]
 just *args:
     just {{args}}
+
+[group("cat")]
+cat *args:
+    {{cat_command}} {{args}}
 
 [group("git")]
 add-staged-c: (add staged-c)
