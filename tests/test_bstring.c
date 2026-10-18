@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../../include/bstring.h"
+#include "../include/bstring.h"
 
 #define BLUE   "\033[34m"
 #define GREEN  "\033[32m"

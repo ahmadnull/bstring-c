@@ -1,4 +1,4 @@
-#include "../../include/bstring.h"
+#include "../include/bstring.h"
 #include <stdio.h>
 
 int main(int argc, char **argv) {

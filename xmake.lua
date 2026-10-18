@@ -23,5 +23,5 @@ function add_test(name, source)
         end
 end
 
-add_test("example_bstring", "test/integration_tests/example_bstring.c")
-add_test("test_bstring", "test/unit_tests/test_bstring.c")
+add_test("example_bstring", "examples/example_bstring.c")
+add_test("test_bstring", "tests/test_bstring.c")
