@@ -13,9 +13,31 @@ force        := "0"
 rebuild_flag := if force == "1" { "--rebuild" } else { "" }
 
 [group("xmake")]
+[group("run")]
+run-examples *args: build (run-group "examples" args)
+
+[group("xmake")]
+[group("run")]
+run-group group *args: build (run "-g" group args)
+
+[group("xmake")]
+[group("run")]
 run *args: build (xmake "run" args)
 
 [group("xmake")]
+[group("test")]
+test-integration *args: (test-group "integration" args)
+
+[group("xmake")]
+[group("test")]
+test-unit *args: (test-group "unit" args)
+
+[group("xmake")]
+[group("test")]
+test-group group *args: (test "-g" group + "_tests" args)
+
+[group("xmake")]
+[group("test")]
 test *args: && config (xmake "test" "-j1" args)
     export mode={{ if mode != "debug" { "valgrind" } else { "debug" } }}
 

@@ -6,6 +6,8 @@
 #include "../include/bstring.h"
 #include "internal.c"
 
+/* --- Public API Implementation --- */
+
 bstring bstring_new(cstring cstr) {
   return bstring_new_with_length(cstr, strlen(cstr));
 }
