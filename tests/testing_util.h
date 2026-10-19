@@ -1,7 +1,7 @@
 
 #define BLUE   "\033[34m"
 #define GREEN  "\033[32m"
-#define GREY   "\033[30m"
+#define CYAN   "\033[36m"
 #define YELLOW "\033[33m"
 #define BOLD   "\033[1m"
 #define NORMAL "\033[0m"
@@ -21,8 +21,8 @@
 } while (0)
 
 #define debug(name, specifier, value, tabs) do {                                                                         \
-    printf("\n" YELLOW BOLD "[%zu.%zu] " name "%.*s= %" specifier NORMAL "\n", index_0, index_1, tabs, "\t\t\t", value); \
+    printf("\n" CYAN BOLD "[%zu.%zu] " name "%.*s= %" specifier NORMAL "\n", index_0, index_1, tabs, "\t\t\t", value); \
     index_1++;                                                                                                           \
 } while (0)
 
-#define log(comment) printf("\n" GREY BOLD comment NORMAL "\n")
+#define log(comment) printf("\n" YELLOW BOLD comment NORMAL "\n")
