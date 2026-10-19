@@ -13,9 +13,9 @@ target("bstring")
 
 includes("xmake/targets.lua")
 
-add_test("test_unit", "tests/unit/test_unit.c", "unit")
-add_test("test_integration", "tests/integration/test_integration.c", "integration")
+add_dir_tests("tests/unit", "unit")
+add_dir_tests("tests/integration", "integration")
 
-add_example("example_bstring", "examples/example_bstring.c")
+add_dir_examples("examples")
 
 includes("xmake/examples.lua")

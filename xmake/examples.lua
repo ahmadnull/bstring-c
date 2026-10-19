@@ -50,9 +50,9 @@ local function find_cat_command(find_program)
     -- Prefer 'bat', fallback to 'cat'
     local cat_command = "cat"
     if find_program("bat") then
-        cat_command = "bat --style=plain --color=always"
+        cat_command = "bat -P --style=plain --color=always"
     elseif find_program("batcat") then
-        cat_command = "batcat --style=plain --color=always"
+        cat_command = "batcat -P --style=plain --color=always"
     end
 
     return cat_command

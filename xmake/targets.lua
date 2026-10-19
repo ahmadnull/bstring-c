@@ -29,3 +29,15 @@ end
 function add_example(name, source)
     add_target(name, source, "examples", false)
 end
+
+function add_dir_tests(dir, group)
+    for _, source in ipairs(os.files(dir .. "/*.c")) do
+        add_test(group .. "_" .. path.basename(source), source, group)
+    end
+end
+
+function add_dir_examples(dir)
+    for _, source in ipairs(os.files(dir .. "/*.c")) do
+        add_example(path.basename(source), source)
+    end
+end

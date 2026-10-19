@@ -1,3 +1,7 @@
+#include <assert.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdio.h>
 
 #define BLUE   "\033[34m"
 #define GREEN  "\033[32m"
