@@ -8,6 +8,7 @@ target("bstring")
     set_kind("shared")
     add_files("src/api_impl.c")
     add_files("src/internal.c")
+    set_group("main")
 
 includes("xmake/targets.lua")
 

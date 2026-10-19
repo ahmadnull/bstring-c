@@ -21,5 +21,5 @@ function add_test(name, source, group)
 end
 
 function add_example(name, source)
-    add_target(name, source, "examples", true)
+    add_target(name, source, "examples", false)
 end
