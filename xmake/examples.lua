@@ -75,7 +75,7 @@ task("run-examples")
                 count = count + 1
 
                 -- Build and run the target
-                print(BOLD .. GREEN .. "\n[" .. count .. "] Execution Output:" .. NORMAL)
+                print(BOLD .. GREEN .. "\n[" .. count .. "] Execution Output" .. NORMAL)
                 os.exec("xmake run " .. name)
             end
         end

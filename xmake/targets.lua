@@ -1,3 +1,8 @@
+function valgrind(target)
+    os.exec("valgrind --leak-check=full --error-exitcode=1 " .. target:targetfile())
+    return true
+end
+
 function add_target(name, source, group, is_test)
     target(name)
         set_kind("binary")
@@ -9,10 +14,11 @@ function add_target(name, source, group, is_test)
             add_tests("default")
         end
         if is_mode("valgrind") then
-            on_test(function (target)
-                os.exec("valgrind --leak-check=full --error-exitcode=1 " .. target:targetfile())
-                return true
-            end)
+            if is_test then
+                on_test(valgrind)
+            else
+                on_run(valgrind)
+            end
         end
 end
 
