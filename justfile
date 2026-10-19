@@ -13,6 +13,21 @@ force        := "0"
 rebuild_flag := if force == "1" { "--rebuild" } else { "" }
 
 cat_command := `if command -v bat >/dev/null 2>&1; then echo bat; elif command -v batcat >/dev/null 2>&1; then echo batcat; else echo cat; fi`
+tree_command := `if command -v eza >/dev/null 2>&1; then echo "eza --tree --color always --icons always"; else echo tree; fi`
+tree_git_ignore_flag := `if command -v eza >/dev/null 2>&1; then echo "--git-ignore"; else echo "--gitignore"; fi`
+
+[group("info")]
+tree-gitignore *args: (tree tree_git_ignore_flag args)
+
+alias t := tree-gitignore
+
+[group("info")]
+tree *args:
+    {{tree_command}} {{args}}
+
+[group("info")]
+tokei *args:
+    tokei {{args}}
 
 [group("xmake")]
 [group("examples")]
@@ -91,6 +106,7 @@ just *args:
     just {{args}}
 
 [group("cat")]
+[private]
 cat *args:
     {{cat_command}} {{args}}
 
