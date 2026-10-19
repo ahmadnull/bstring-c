@@ -95,7 +95,7 @@ bstring_to_upper(bstring bstr)
   for (size_t i = 0; i < bstr.length; i++)
     cstr[i] = toupper(cstr[i]);
 
-  return bstring_new_with_length(cstr, bstr.length);
+  return bstring_from_owned(cstr, bstr.length);
 }
 
 bstring
@@ -107,5 +107,5 @@ bstring_to_lower(bstring bstr)
   for (size_t i = 0; i < bstr.length; i++)
     cstr[i] = tolower(cstr[i]);
 
-  return bstring_new_with_length(cstr, bstr.length);
+  return bstring_from_owned(cstr, bstr.length);
 }

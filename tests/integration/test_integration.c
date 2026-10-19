@@ -34,6 +34,8 @@ test_build_and_transform(void)
   tee(assert(bstring_eq_cstr(lower, "hello world")));
   tee(assert(!bstring_eq(sentence, upper)));
 
+  bstring_free(&greeting);
+  bstring_free(&target);
   bstring_free(&sentence);
   bstring_free(&upper);
   bstring_free(&lower);
@@ -64,6 +66,8 @@ test_request_pipeline(void)
   tee(assert(bstring_eq_cstr(request, "GET /index.html HTTP/1.1")));
   tee(assert(bstring_eq_cstr(upper, "GET /INDEX.HTML HTTP/1.1")));
 
+  bstring_free(&method);
+  bstring_free(&path);
   bstring_free(&line);
   bstring_free(&request);
   bstring_free(&upper);
@@ -89,6 +93,7 @@ test_copy_is_independent(void)
   tee(assert(bstring_eq_cstr(origin, "foo bar baz")));
   tee(assert(bstring_eq_cstr(copy, "foo_bar baz")));
 
+  bstring_free(&origin);
   bstring_free(&copy);
 }
 

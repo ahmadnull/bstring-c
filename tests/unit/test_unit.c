@@ -27,6 +27,8 @@ test_new(void)
 
   tee(assert(bstr.length == strlen(cstr)));
   tee(assert(strcmp(bstr.str, cstr) == 0));
+
+  bstring_free(&bstr);
 }
 
 /**
@@ -46,6 +48,8 @@ test_to_cstr(void)
   debug("cstr2", "s", cstr2, 1);
 
   tee(assert(strcmp(cstr1, cstr2) == 0));
+
+  bstring_free(&bstr);
 }
 
 /**
@@ -67,6 +71,8 @@ test_length(void)
   debug("bstr length", "zu", b_len, 1);
 
   tee(assert(b_len == c_len));
+
+  bstring_free(&bstr);
 }
 
 /**
@@ -96,7 +102,9 @@ test_concat(void)
   tee(assert(strcmp(s2.str, BASE SUFFIX) == 0));
   tee(assert(strcmp(s4.str, BASE SUFFIX) == 0));
 
+  bstring_free(&s1);
   bstring_free(&s2);
+  bstring_free(&s3);
   bstring_free(&s4);
 
 #undef BASE
@@ -125,6 +133,7 @@ test_copy(void)
   tee(assert(strcmp(bstr1.str, cstr1) == 0));
   tee(assert(strcmp(bstr2.str, cstr2) == 0));
 
+  bstring_free(&bstr1);
   bstring_free(&bstr2);
 }
 
@@ -150,6 +159,9 @@ test_eq(void)
   log("Test returns false");
   tee(assert(!bstring_eq(bstr1, bstr2)));
   tee(assert(!bstring_eq_cstr(bstr1, cstr2)));
+
+  bstring_free(&bstr1);
+  bstring_free(&bstr2);
 }
 
 static void
@@ -164,6 +176,8 @@ test_search(void)
   tee(assert(bstring_search(bstr, 'V') == 0));
   tee(assert(bstring_search(bstr, 't') == 4));
   tee(assert(bstring_search(bstr, 's') == 6));
+
+  bstring_free(&bstr);
 }
 
 static void
@@ -178,6 +192,8 @@ test_char_at(void)
   tee(assert(bstring_char_at(bstr, 0) == 'V'));
   tee(assert(bstring_char_at(bstr, 4) == 't'));
   tee(assert(bstring_char_at(bstr, 6) == 's'));
+
+  bstring_free(&bstr);
 }
 
 static void
@@ -199,6 +215,7 @@ test_to_upper(void)
   log("Test that bstring_to_upper works correctly");
   tee(assert(strcmp(bstr_upper.str, "VERITAS VINCIT") == 0));
 
+  bstring_free(&bstr);
   bstring_free(&bstr_upper);
 }
 
@@ -221,6 +238,7 @@ test_to_lower(void)
   log("Test that bstring_to_lower works correctly");
   tee(assert(strcmp(bstr_lower.str, "veritas vincit") == 0));
 
+  bstring_free(&bstr);
   bstring_free(&bstr_lower);
 }
 

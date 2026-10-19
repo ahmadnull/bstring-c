@@ -5,10 +5,31 @@
 
 /* --- Private Internal Code --- */
 
+static cstring
+cstring_copy(cstring cstr, size_t length)
+{
+  cstring copy = malloc(length + 1);
+  if (copy == NULL)
+    return NULL;
+  memcpy(copy, cstr, length);
+  copy[length] = '\0';
+  return copy;
+}
+
+static bstring
+bstring_from_owned(cstring cstr, size_t length)
+{
+  return (bstring){ .str = cstr, .length = length };
+}
+
 static bstring
 bstring_new_with_length(cstring cstr, size_t length)
 {
-  return (bstring){ .str = cstr, .length = length };
+  cstring str = cstring_copy(cstr, length);
+  if (str == NULL)
+    return (bstring){ .str = NULL, .length = 0 };
+
+  return bstring_from_owned(str, length);
 }
 
 static bstring
@@ -25,7 +46,7 @@ bstring_concat_cstr_with_length(bstring base, cstring suffix, size_t length)
   memcpy(new_str, base.str, bstr_len);
   memcpy(new_str + bstr_len, suffix, cstr_len + 1);
 
-  return bstring_new_with_length(new_str, new_len);
+  return bstring_from_owned(new_str, new_len);
 }
 
 static bool
