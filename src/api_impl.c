@@ -113,3 +113,11 @@ bstring_to_lower(bstring bstr)
 
   return bstring_from_owned(cstr, bstr.length);
 }
+
+bstring
+bstring_substr(bstring bstr, size_t start, size_t end)
+{
+  size_t length = end - start;
+  return bstring_from_owned(cstring_copy_with_start(bstr.str, length, start),
+                            length);
+}
