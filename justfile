@@ -2,10 +2,12 @@ _default: check (test "-v")
 
 staged-c := `git diff --cached --name-only -- "*.[c|h]" | tr "\n" " "`
 
-mode := (
-    if      env("release", "0")  == "1" { "release"  }
-    else if env("valgrind", "0") == "1" { "valgrind" }
-    else                                { "debug"    }
+release  := "0"
+valgrind := "0"
+mode     := (
+    if      release  == "1" { "release"  }
+    else if valgrind == "1" { "valgrind" }
+    else                    { "debug"    }
 )
 
 verbose      := "0"
