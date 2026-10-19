@@ -26,8 +26,8 @@ static bstring
 bstring_new_with_length(cstring cstr, size_t length)
 {
   cstring str = cstring_copy(cstr, length);
-  if (str == NULL)
-    return (bstring){ .str = NULL, .length = 0 };
+  if (cstr == NULL)
+    return BSTRING_NULL;
 
   return bstring_from_owned(str, length);
 }
@@ -41,7 +41,7 @@ bstring_concat_cstr_with_length(bstring base, cstring suffix, size_t length)
 
   cstring new_str = malloc(new_len + 1);
   if (new_str == NULL)
-    return (bstring){ .str = NULL, .length = 0 };
+    return BSTRING_NULL;
 
   memcpy(new_str, base.str, bstr_len);
   memcpy(new_str + bstr_len, suffix, cstr_len + 1);

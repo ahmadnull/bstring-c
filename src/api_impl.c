@@ -41,9 +41,9 @@ bstring_concat_cstr(bstring base, cstring suffix)
 bstring
 bstring_copy(bstring bstr)
 {
-  cstring str = malloc(bstr.length + 1);
+  cstring str = cstring_copy(bstr.str, bstr.length);
   if (str == NULL)
-    return (bstring){ .str = NULL, .length = 0 };
+    return BSTRING_NULL;
 
   memcpy(str, bstr.str, bstr.length + 1);
 
@@ -54,6 +54,8 @@ void
 bstring_free(bstring* bstr)
 {
   free(bstr->str);
+  bstr->str = NULL;
+  bstr->length = 0;
 }
 
 bool
@@ -89,8 +91,9 @@ bstring_char_at(bstring bstr, size_t index)
 bstring
 bstring_to_upper(bstring bstr)
 {
-  cstring cstr = malloc(bstr.length + 1);
-  strcpy(cstr, bstr.str);
+  cstring cstr = cstring_copy(bstr.str, bstr.length);
+  if (cstr == NULL)
+    return BSTRING_NULL;
 
   for (size_t i = 0; i < bstr.length; i++)
     cstr[i] = toupper(cstr[i]);
@@ -101,8 +104,9 @@ bstring_to_upper(bstring bstr)
 bstring
 bstring_to_lower(bstring bstr)
 {
-  cstring cstr = malloc(bstr.length + 1);
-  strcpy(cstr, bstr.str);
+  cstring cstr = cstring_copy(bstr.str, bstr.length);
+  if (cstr == NULL)
+    return BSTRING_NULL;
 
   for (size_t i = 0; i < bstr.length; i++)
     cstr[i] = tolower(cstr[i]);

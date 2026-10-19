@@ -18,6 +18,8 @@ typedef struct {
     size_t length;
 } bstring;
 
+#define BSTRING_NULL (bstring){ .str = NULL, .length = 0 }
+
 BSTRING_EXPORT bstring bstring_new(cstring cstr);
 BSTRING_EXPORT cstring bstring_to_cstr(bstring bstr);
 BSTRING_EXPORT size_t  bstring_length(bstring bstr);
