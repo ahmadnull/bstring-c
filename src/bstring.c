@@ -4,7 +4,8 @@
 #include <string.h>
 
 #include "../include/bstring.h"
-#include "internal.c"
+#include "../include/internal/bstring.h"
+#include "../include/internal/cstring.h"
 
 /* --- Public API Implementation --- */
 

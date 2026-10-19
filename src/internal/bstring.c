@@ -1,34 +1,17 @@
+#include "../../include/internal/bstring.h"
+#include "../../include/internal/cstring.h"
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/bstring.h"
-
 /* --- Private Internal Code --- */
 
-static cstring
-cstring_copy_with_start(cstring cstr, size_t length, size_t start)
-{
-  cstring copy = malloc(length + 1);
-  if (copy == NULL)
-    return NULL;
-  memcpy(copy, cstr + start, length);
-  copy[length] = '\0';
-  return copy;
-}
-
-static cstring
-cstring_copy(cstring cstr, size_t length)
-{
-  return cstring_copy_with_start(cstr, length, 0);
-}
-
-static bstring
+bstring
 bstring_from_owned(cstring cstr, size_t length)
 {
   return (bstring){ .str = cstr, .length = length };
 }
 
-static bstring
+bstring
 bstring_new_with_length(cstring cstr, size_t length)
 {
   cstring str = cstring_copy(cstr, length);
@@ -38,7 +21,7 @@ bstring_new_with_length(cstring cstr, size_t length)
   return bstring_from_owned(str, length);
 }
 
-static bstring
+bstring
 bstring_concat_cstr_with_length(bstring base, cstring suffix, size_t length)
 {
   size_t bstr_len = base.length;
@@ -55,7 +38,7 @@ bstring_concat_cstr_with_length(bstring base, cstring suffix, size_t length)
   return bstring_from_owned(new_str, new_len);
 }
 
-static bool
+bool
 bstring_eq_cstr_with_length(bstring a,
                             cstring b,
                             size_t a_length,

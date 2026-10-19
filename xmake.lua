@@ -6,8 +6,9 @@ set_defaultmode("debug")
 
 target("bstring")
     set_kind("shared")
-    add_files("src/api_impl.c")
-    add_files("src/internal.c")
+    add_files("src/bstring.c")
+    add_files("src/internal/bstring.c")
+    add_files("src/internal/cstring.c")
     set_group("main")
 
 includes("xmake/targets.lua")
