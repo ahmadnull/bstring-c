@@ -52,7 +52,7 @@ clean *args: (xmake "clean" args)
 format-check *args: (format "--dry-run" args)
 
 [group("xmake")]
-format *args: (xmake "format" "--group=*" "--style=Mozilla" args)
+format *args: (xmake "format" "--group=*" args)
 
 [group("xmake")]
 [private]

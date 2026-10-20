@@ -12,113 +12,114 @@
 bstring
 bstring_new(cstring cstr)
 {
-  return bstring_new_with_length(cstr, strlen(cstr));
+    return bstring_new_with_length(cstr, strlen(cstr));
 }
 
 cstring
 bstring_to_cstr(bstring bstr)
 {
-  return bstr.str;
+    return bstr.str;
 }
 
 size_t
 bstring_length(bstring bstr)
 {
-  return bstr.length;
+    return bstr.length;
 }
 
 bstring
 bstring_concat(bstring base, bstring suffix)
 {
-  return bstring_concat_cstr_with_length(base, suffix.str, strlen(suffix.str));
+    return bstring_concat_cstr_with_length(
+        base, suffix.str, strlen(suffix.str));
 }
 
 bstring
 bstring_concat_cstr(bstring base, cstring suffix)
 {
-  return bstring_concat_cstr_with_length(base, suffix, strlen(suffix));
+    return bstring_concat_cstr_with_length(base, suffix, strlen(suffix));
 }
 
 bstring
 bstring_copy(bstring bstr)
 {
-  cstring str = cstring_copy(bstr.str, bstr.length);
-  if (str == NULL)
-    return BSTRING_NULL;
+    cstring str = cstring_copy(bstr.str, bstr.length);
+    if (str == NULL)
+        return BSTRING_NULL;
 
-  memcpy(str, bstr.str, bstr.length + 1);
+    memcpy(str, bstr.str, bstr.length + 1);
 
-  return (bstring){ .str = str, .length = bstr.length };
+    return (bstring){ .str = str, .length = bstr.length };
 }
 
 void
 bstring_free(bstring* bstr)
 {
-  free(bstr->str);
-  bstr->str = NULL;
-  bstr->length = 0;
+    free(bstr->str);
+    bstr->str = NULL;
+    bstr->length = 0;
 }
 
 bool
 bstring_eq(bstring a, bstring b)
 {
-  return bstring_eq_cstr_with_length(a, b.str, a.length, b.length);
+    return bstring_eq_cstr_with_length(a, b.str, a.length, b.length);
 }
 
 bool
 bstring_eq_cstr(bstring a, cstring b)
 {
-  return bstring_eq_cstr_with_length(a, b, a.length, strlen(b));
+    return bstring_eq_cstr_with_length(a, b, a.length, strlen(b));
 }
 
 int
 bstring_search(bstring bstr, char c)
 {
-  for (size_t i = 0; i < bstr.length; i++)
-    if (bstr.str[i] == c)
-      return i;
-  return -1;
+    for (size_t i = 0; i < bstr.length; i++)
+        if (bstr.str[i] == c)
+            return i;
+    return -1;
 }
 
 char
 bstring_char_at(bstring bstr, size_t index)
 {
-  if (index > bstr.length)
-    return 0;
+    if (index > bstr.length)
+        return 0;
 
-  return bstr.str[index];
+    return bstr.str[index];
 }
 
 bstring
 bstring_to_upper(bstring bstr)
 {
-  cstring cstr = cstring_copy(bstr.str, bstr.length);
-  if (cstr == NULL)
-    return BSTRING_NULL;
+    cstring cstr = cstring_copy(bstr.str, bstr.length);
+    if (cstr == NULL)
+        return BSTRING_NULL;
 
-  for (size_t i = 0; i < bstr.length; i++)
-    cstr[i] = toupper(cstr[i]);
+    for (size_t i = 0; i < bstr.length; i++)
+        cstr[i] = toupper(cstr[i]);
 
-  return bstring_from_owned(cstr, bstr.length);
+    return bstring_from_owned(cstr, bstr.length);
 }
 
 bstring
 bstring_to_lower(bstring bstr)
 {
-  cstring cstr = cstring_copy(bstr.str, bstr.length);
-  if (cstr == NULL)
-    return BSTRING_NULL;
+    cstring cstr = cstring_copy(bstr.str, bstr.length);
+    if (cstr == NULL)
+        return BSTRING_NULL;
 
-  for (size_t i = 0; i < bstr.length; i++)
-    cstr[i] = tolower(cstr[i]);
+    for (size_t i = 0; i < bstr.length; i++)
+        cstr[i] = tolower(cstr[i]);
 
-  return bstring_from_owned(cstr, bstr.length);
+    return bstring_from_owned(cstr, bstr.length);
 }
 
 bstring
 bstring_substr(bstring bstr, size_t start, size_t end)
 {
-  size_t length = end - start;
-  return bstring_from_owned(cstring_copy_with_start(bstr.str, length, start),
-                            length);
+    size_t length = end - start;
+    return bstring_from_owned(cstring_copy_with_start(bstr.str, length, start),
+                              length);
 }
