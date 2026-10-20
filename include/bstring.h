@@ -11,7 +11,7 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-#define cstring char*
+typedef unsigned char* cstring;
 
 typedef struct {
     cstring  str;
