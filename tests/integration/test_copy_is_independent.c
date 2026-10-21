@@ -4,6 +4,8 @@
 
 index_start(0, 0);
 
+const bool TEE = true;
+
 /**
  * A copy must be independent from its origin.
  */

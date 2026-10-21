@@ -19,11 +19,11 @@
     index_0++;                                                  \
 } while (0)
 
-#define tee(statement) do                                                          \
-{                                                                                  \
-    printf("\n" GREEN BOLD "[%zu.%zu] " #statement NORMAL "\n", index_0, index_1); \
-    statement;                                                                     \
-    index_1++;                                                                     \
+#define tee(statement) do                                                                                  \
+{                                                                                                          \
+    printf("\n" "%s" BOLD "[%zu.%zu] " #statement NORMAL "\n", (TEE ? GREEN : YELLOW),  index_0, index_1); \
+    if (TEE) statement;                                                                                    \
+    index_1++;                                                                                             \
 } while (0)
 
 #define debug(name, specifier, value, tabs) do                                                                           \

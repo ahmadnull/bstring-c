@@ -4,6 +4,8 @@
 
 index_start(0, 0);
 
+const bool TEE = true;
+
 /**
  * Compose an HTTP request line and inspect it.
  */

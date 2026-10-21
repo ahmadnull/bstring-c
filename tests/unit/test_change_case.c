@@ -4,6 +4,8 @@
 
 index_start(0, 0);
 
+const bool TEE = true;
+
 static void
 test_to_upper(void)
 {
