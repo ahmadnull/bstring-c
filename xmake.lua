@@ -9,6 +9,7 @@ target("bstring")
     add_files("src/bstring.c")
     add_files("src/internal/bstring.c")
     add_files("src/internal/cstring.c")
+    add_files("src/internal/char.c")
     set_group("main")
 
 includes("xmake/targets.lua")
