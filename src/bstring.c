@@ -158,3 +158,21 @@ bstring_substr(bstring bstr, size_t start, size_t end)
 
     return bstring_from_owned(str, length);
 }
+
+bool
+bstring_begins_with(bstring bstr, cstring prefix)
+{
+    size_t prefix_len = strlen(prefix);
+    if (prefix_len > bstr.length)
+        return false;
+    return memcmp(bstr.str, prefix, prefix_len) == 0;
+}
+
+bool
+bstring_ends_with(bstring bstr, cstring suffix)
+{
+    size_t suffix_len = strlen(suffix);
+    if (suffix_len > bstr.length)
+        return false;
+    return memcmp(bstr.str + bstr.length - suffix_len, suffix, suffix_len) == 0;
+}
