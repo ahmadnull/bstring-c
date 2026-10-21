@@ -1,3 +1,5 @@
+set allow-duplicate-recipes
+
 _default: check (just "valgrind=1" "test" "-v")
 
 staged-c := `git diff --cached --name-only -- "*.[c|h]" | tr "\n" " "`
@@ -75,5 +77,13 @@ just *args:
 cat *args:
     {{cat_command}} {{args}}
 
-import "just/xmake.just"
-import "just/git.just"
+[group("setup")]
+setup: gen-just
+
+[group("setup")]
+[script]
+gen-just:
+    scripts/gen-just.sh
+
+import? "just/xmake.just"
+import? "just/git.just"

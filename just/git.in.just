@@ -1,13 +1,9 @@
-[group("git")]
 add-staged-c: (add staged-c)
 
-[group("git")]
 add-all: (add "-A")
 
-[group("git")]
 add +args: (git "add" args)
 
-[group("git")]
 [arg("type", pattern="feat|fix|refactor|perf|style|test|docs|build|ops|chore")]
 [arg("scope", short="s", long="scope")]
 [arg("breaking", short="B", long="breaking", value="1")]
@@ -19,7 +15,6 @@ commit type description scope="" breaking="0" body="" footer="": format add-stag
     if [ "{{breaking}}" -eq "1" ]; then breaking="!"; fi
     git commit -m "{{type}}${scope}${breaking}: {{description}}" -m "{{body}}" -m "{{footer}}"
 
-[group("git")]
 [private]
 git *args:
     git {{args}}

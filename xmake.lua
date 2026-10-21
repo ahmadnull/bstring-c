@@ -4,6 +4,8 @@ set_version("0.0.0")
 add_rules("mode.debug", "mode.release", "mode.valgrind")
 set_defaultmode("debug")
 
+add_moduledirs("xmake/modules")
+
 target("bstring")
     set_kind("shared")
     add_files("src/bstring.c")
@@ -13,11 +15,9 @@ target("bstring")
     set_group("main")
 
 includes("xmake/targets.lua")
+includes("xmake/tasks/*.lua")
 
 add_dir_tests("tests/unit", "unit")
 add_dir_tests("tests/integration", "integration")
 
 add_dir_examples("examples")
-
-includes("xmake/examples.lua")
-includes("xmake/tasks.lua")
