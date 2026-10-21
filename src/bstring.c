@@ -6,7 +6,6 @@
 #include "../include/internal/bstring.h"
 #include "../include/internal/char.h"
 #include "../include/internal/cstring.h"
-#include "../include/internal/int.h"
 
 /* --- Public API Implementation --- */
 
