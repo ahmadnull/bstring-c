@@ -20,3 +20,4 @@ add_dir_tests("tests/integration", "integration")
 add_dir_examples("examples")
 
 includes("xmake/examples.lua")
+includes("xmake/tasks.lua")

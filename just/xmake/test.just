@@ -1,3 +1,7 @@
+[group("xmake")]
+[group("test")]
+test-coverage: (xmake "test-coverage")
+
 # Test a single integration test
 [group("xmake")]
 [group("test")]
