@@ -37,3 +37,4 @@ BSTRING_EXPORT bstring bstring_to_lower(bstring bstr);
 BSTRING_EXPORT bstring bstring_substr(bstring bstr, size_t start, size_t end);
 BSTRING_EXPORT bool    bstring_begins_with(bstring bstr, cstring prefix);
 BSTRING_EXPORT bool    bstring_ends_with(bstring bstr, cstring suffix);
+BSTRING_EXPORT bstring bstring_trim(bstring bstr);

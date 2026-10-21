@@ -1,11 +1,12 @@
 #include <ctype.h>
-#include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "../include/bstring.h"
 #include "../include/internal/bstring.h"
+#include "../include/internal/char.h"
 #include "../include/internal/cstring.h"
+#include "../include/internal/int.h"
 
 /* --- Public API Implementation --- */
 
@@ -175,4 +176,22 @@ bstring_ends_with(bstring bstr, cstring suffix)
     if (suffix_len > bstr.length)
         return false;
     return memcmp(bstr.str + bstr.length - suffix_len, suffix, suffix_len) == 0;
+}
+
+bstring
+bstring_trim(bstring bstr)
+{
+    if (bstr.str == NULL)
+        return BSTRING_NULL;
+
+    usize start = 0;
+    usize end = bstr.length;
+
+    while (start < end && is_whitespace(bstr.str[start]))
+        start++;
+
+    while (end > start && is_whitespace(bstr.str[end - 1]))
+        end--;
+
+    return bstring_substr(bstr, start, end);
 }
