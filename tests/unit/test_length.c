@@ -14,8 +14,8 @@ test_length(void)
 {
     cstring cstr = "Tempus Fugit";
     bstring bstr = bstring_new(cstr);
-    size_t c_len = strlen(cstr);
-    size_t b_len = bstring_length(bstr);
+    usize c_len = strlen(cstr);
+    usize b_len = bstring_length(bstr);
 
     index_start(1, 0);
 

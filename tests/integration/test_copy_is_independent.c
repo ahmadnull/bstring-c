@@ -15,7 +15,7 @@ test_copy_is_independent(void)
     bstring origin = bstring_new("foo bar baz");
     bstring copy = bstring_copy(origin);
 
-    size_t space = bstring_search(copy, ' ');
+    usize space = bstring_search(copy, ' ');
     copy.str[space] = '_';
 
     index_start(1, 0);

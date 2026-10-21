@@ -22,7 +22,7 @@ bstring_to_cstr(bstring bstr)
     return bstr.str;
 }
 
-size_t
+usize
 bstring_length(bstring bstr)
 {
     return bstr.length;
@@ -74,7 +74,7 @@ bstring_eq_cstr(bstring a, cstring b)
 int
 bstring_search(bstring bstr, char c)
 {
-    for (size_t i = 0; i < bstr.length; i++)
+    for (usize i = 0; i < bstr.length; i++)
         if (bstr.str[i] == c)
             return i;
     return -1;
@@ -83,7 +83,7 @@ bstring_search(bstring bstr, char c)
 int
 bstring_search_substr(bstring bstr, cstring substr)
 {
-    size_t substr_len = strlen(substr);
+    usize substr_len = strlen(substr);
 
     if (substr_len == 0)
         return 0;
@@ -91,8 +91,8 @@ bstring_search_substr(bstring bstr, cstring substr)
     if (substr_len > bstr.length || bstr.str == NULL)
         return -1;
 
-    size_t count = 0;
-    for (size_t i = 0; i < bstr.length; i++) {
+    usize count = 0;
+    for (usize i = 0; i < bstr.length; i++) {
         if (bstr.str[i] == substr[count])
             count++;
         else {
@@ -108,7 +108,7 @@ bstring_search_substr(bstring bstr, cstring substr)
 }
 
 char
-bstring_char_at(bstring bstr, size_t index)
+bstring_char_at(bstring bstr, usize index)
 {
     if (index >= bstr.length)
         return 0;
@@ -123,7 +123,7 @@ bstring_to_upper(bstring bstr)
     if (cstr == NULL)
         return BSTRING_NULL;
 
-    for (size_t i = 0; i < bstr.length; i++)
+    for (usize i = 0; i < bstr.length; i++)
         cstr[i] = toupper((unsigned char)cstr[i]);
 
     return bstring_from_owned(cstr, bstr.length);
@@ -136,14 +136,14 @@ bstring_to_lower(bstring bstr)
     if (cstr == NULL)
         return BSTRING_NULL;
 
-    for (size_t i = 0; i < bstr.length; i++)
+    for (usize i = 0; i < bstr.length; i++)
         cstr[i] = tolower((unsigned char)cstr[i]);
 
     return bstring_from_owned(cstr, bstr.length);
 }
 
 bstring
-bstring_substr(bstring bstr, size_t start, size_t end)
+bstring_substr(bstring bstr, usize start, usize end)
 {
     if (start > bstr.length)
         start = bstr.length;
@@ -152,7 +152,7 @@ bstring_substr(bstring bstr, size_t start, size_t end)
     if (end < start)
         end = start;
 
-    size_t length = end - start;
+    usize length = end - start;
     cstring str = cstring_copy_with_start(bstr.str, length, start);
     if (str == NULL)
         return BSTRING_NULL;
@@ -163,7 +163,7 @@ bstring_substr(bstring bstr, size_t start, size_t end)
 bool
 bstring_begins_with(bstring bstr, cstring prefix)
 {
-    size_t prefix_len = strlen(prefix);
+    usize prefix_len = strlen(prefix);
     if (prefix_len > bstr.length)
         return false;
     return memcmp(bstr.str, prefix, prefix_len) == 0;
@@ -172,7 +172,7 @@ bstring_begins_with(bstring bstr, cstring prefix)
 bool
 bstring_ends_with(bstring bstr, cstring suffix)
 {
-    size_t suffix_len = strlen(suffix);
+    usize suffix_len = strlen(suffix);
     if (suffix_len > bstr.length)
         return false;
     return memcmp(bstr.str + bstr.length - suffix_len, suffix, suffix_len) == 0;

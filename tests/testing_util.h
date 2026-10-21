@@ -10,7 +10,7 @@
 #define BOLD   "\033[1m"
 #define NORMAL "\033[0m"
 
-#define index_start(level, start) static size_t index_##level = start
+#define index_start(level, start) static usize index_##level = start
 
 #define run_test(test) do                                       \
 {                                                               \

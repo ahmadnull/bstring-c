@@ -4,7 +4,7 @@
 #include "../../include/internal/cstring.h"
 
 cstring
-cstring_copy_with_start(cstring cstr, size_t length, size_t start)
+cstring_copy_with_start(cstring cstr, usize length, usize start)
 {
     cstring copy = malloc(length + 1);
     if (copy == NULL)
@@ -15,7 +15,7 @@ cstring_copy_with_start(cstring cstr, size_t length, size_t start)
 }
 
 cstring
-cstring_copy(cstring cstr, size_t length)
+cstring_copy(cstring cstr, usize length)
 {
     return cstring_copy_with_start(cstr, length, 0);
 }

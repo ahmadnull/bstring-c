@@ -6,13 +6,13 @@
 /* --- Private Internal Code --- */
 
 bstring
-bstring_from_owned(cstring cstr, size_t length)
+bstring_from_owned(cstring cstr, usize length)
 {
     return (bstring){ .str = cstr, .length = length };
 }
 
 bstring
-bstring_new_with_length(cstring cstr, size_t length)
+bstring_new_with_length(cstring cstr, usize length)
 {
     cstring str = cstring_copy(cstr, length);
     if (str == NULL)
@@ -22,11 +22,11 @@ bstring_new_with_length(cstring cstr, size_t length)
 }
 
 bstring
-bstring_concat_cstr_with_length(bstring base, cstring suffix, size_t length)
+bstring_concat_cstr_with_length(bstring base, cstring suffix, usize length)
 {
-    size_t bstr_len = base.length;
-    size_t cstr_len = length;
-    size_t new_len = bstr_len + cstr_len;
+    usize bstr_len = base.length;
+    usize cstr_len = length;
+    usize new_len = bstr_len + cstr_len;
 
     cstring new_str = malloc(new_len + 1);
     if (new_str == NULL)
@@ -41,13 +41,13 @@ bstring_concat_cstr_with_length(bstring base, cstring suffix, size_t length)
 bool
 bstring_eq_cstr_with_length(bstring a,
                             cstring b,
-                            size_t a_length,
-                            size_t b_length)
+                            usize a_length,
+                            usize b_length)
 {
     if (a_length != b_length)
         return false;
 
-    for (size_t i = 0; i < a_length; i++)
+    for (usize i = 0; i < a_length; i++)
         if (a.str[i] != b[i])
             return false;
 

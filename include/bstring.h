@@ -11,18 +11,19 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+typedef size_t usize;
 typedef char* cstring;
 
 typedef struct {
     cstring  str;
-    size_t length;
+    usize length;
 } bstring;
 
 #define BSTRING_NULL (bstring){ .str = NULL, .length = 0 }
 
 BSTRING_EXPORT bstring bstring_new(cstring cstr);
 BSTRING_EXPORT cstring bstring_to_cstr(bstring bstr);
-BSTRING_EXPORT size_t  bstring_length(bstring bstr);
+BSTRING_EXPORT usize  bstring_length(bstring bstr);
 BSTRING_EXPORT bstring bstring_concat(bstring base, bstring suffix);
 BSTRING_EXPORT bstring bstring_concat_cstr(bstring base, cstring suffix);
 BSTRING_EXPORT bstring bstring_copy(bstring bstr);
@@ -31,10 +32,10 @@ BSTRING_EXPORT bool    bstring_eq(bstring a, bstring b);
 BSTRING_EXPORT bool    bstring_eq_cstr(bstring a, cstring b);
 BSTRING_EXPORT int     bstring_search(bstring bstr, char c);
 BSTRING_EXPORT int     bstring_search_substr(bstring bstr, cstring substr);
-BSTRING_EXPORT char    bstring_char_at(bstring bstr, size_t index);
+BSTRING_EXPORT char    bstring_char_at(bstring bstr, usize index);
 BSTRING_EXPORT bstring bstring_to_upper(bstring bstr);
 BSTRING_EXPORT bstring bstring_to_lower(bstring bstr);
-BSTRING_EXPORT bstring bstring_substr(bstring bstr, size_t start, size_t end);
+BSTRING_EXPORT bstring bstring_substr(bstring bstr, usize start, usize end);
 BSTRING_EXPORT bool    bstring_begins_with(bstring bstr, cstring prefix);
 BSTRING_EXPORT bool    bstring_ends_with(bstring bstr, cstring suffix);
 BSTRING_EXPORT bstring bstring_trim(bstring bstr);
