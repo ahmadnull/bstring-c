@@ -13,3 +13,12 @@ Inspired By:
 # Development Requirments
 
 - [Xmake](https://xmake.io/)
+- [Just](https://just.systems/)
+
+# Setup development environment
+
+Run:
+
+```sh
+just setup
+```
