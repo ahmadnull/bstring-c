@@ -47,8 +47,6 @@ bstring_copy(bstring bstr)
     if (str == NULL)
         return BSTRING_NULL;
 
-    memcpy(str, bstr.str, bstr.length + 1);
-
     return (bstring){ .str = str, .length = bstr.length };
 }
 
@@ -111,7 +109,7 @@ bstring_search_substr(bstring bstr, cstring substr)
 char
 bstring_char_at(bstring bstr, size_t index)
 {
-    if (index > bstr.length)
+    if (index >= bstr.length)
         return 0;
 
     return bstr.str[index];
@@ -125,7 +123,7 @@ bstring_to_upper(bstring bstr)
         return BSTRING_NULL;
 
     for (size_t i = 0; i < bstr.length; i++)
-        cstr[i] = toupper(cstr[i]);
+        cstr[i] = toupper((unsigned char)cstr[i]);
 
     return bstring_from_owned(cstr, bstr.length);
 }
@@ -138,7 +136,7 @@ bstring_to_lower(bstring bstr)
         return BSTRING_NULL;
 
     for (size_t i = 0; i < bstr.length; i++)
-        cstr[i] = tolower(cstr[i]);
+        cstr[i] = tolower((unsigned char)cstr[i]);
 
     return bstring_from_owned(cstr, bstr.length);
 }
@@ -146,7 +144,17 @@ bstring_to_lower(bstring bstr)
 bstring
 bstring_substr(bstring bstr, size_t start, size_t end)
 {
+    if (start > bstr.length)
+        start = bstr.length;
+    if (end > bstr.length)
+        end = bstr.length;
+    if (end < start)
+        end = start;
+
     size_t length = end - start;
-    return bstring_from_owned(cstring_copy_with_start(bstr.str, length, start),
-                              length);
+    cstring str = cstring_copy_with_start(bstr.str, length, start);
+    if (str == NULL)
+        return BSTRING_NULL;
+
+    return bstring_from_owned(str, length);
 }

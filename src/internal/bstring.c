@@ -15,7 +15,7 @@ bstring
 bstring_new_with_length(cstring cstr, size_t length)
 {
     cstring str = cstring_copy(cstr, length);
-    if (cstr == NULL)
+    if (str == NULL)
         return BSTRING_NULL;
 
     return bstring_from_owned(str, length);

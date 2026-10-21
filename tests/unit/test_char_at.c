@@ -18,6 +18,8 @@ test_char_at(void)
     tee(assert(bstring_char_at(bstr, 0) == 'V'));
     tee(assert(bstring_char_at(bstr, 4) == 't'));
     tee(assert(bstring_char_at(bstr, 6) == 's'));
+    tee(assert(bstring_char_at(bstr, 7) == 0));
+    tee(assert(bstring_char_at(bstr, 100) == 0));
 
     bstring_free(&bstr);
 }
