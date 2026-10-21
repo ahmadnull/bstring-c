@@ -1,4 +1,4 @@
-_default: check (test "-v")
+_default: check (just "valgrind=1" "test" "-v")
 
 staged-c := `git diff --cached --name-only -- "*.[c|h]" | tr "\n" " "`
 
