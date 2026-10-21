@@ -30,6 +30,7 @@ BSTRING_EXPORT void    bstring_free(bstring* bstr);
 BSTRING_EXPORT bool    bstring_eq(bstring a, bstring b);
 BSTRING_EXPORT bool    bstring_eq_cstr(bstring a, cstring b);
 BSTRING_EXPORT int     bstring_search(bstring bstr, char c);
+BSTRING_EXPORT int     bstring_search_substr(bstring bstr, cstring substr);
 BSTRING_EXPORT char    bstring_char_at(bstring bstr, size_t index);
 BSTRING_EXPORT bstring bstring_to_upper(bstring bstr);
 BSTRING_EXPORT bstring bstring_to_lower(bstring bstr);

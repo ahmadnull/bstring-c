@@ -81,6 +81,33 @@ bstring_search(bstring bstr, char c)
     return -1;
 }
 
+int
+bstring_search_substr(bstring bstr, cstring substr)
+{
+    size_t substr_len = strlen(substr);
+
+    if (substr_len == 0)
+        return 0;
+
+    if (substr_len > bstr.length || bstr.str == NULL)
+        return -1;
+
+    size_t count = 0;
+    for (size_t i = 0; i < bstr.length; i++) {
+        if (bstr.str[i] == substr[count])
+            count++;
+        else {
+            i -= count;
+            count = 0;
+        }
+
+        if (count == substr_len)
+            return (int)(i - count + 1);
+    }
+
+    return -1;
+}
+
 char
 bstring_char_at(bstring bstr, size_t index)
 {
